@@ -18,7 +18,8 @@ CONTACT_EMAIL = "Noor.Claus@UGent.be"
 LINKEDIN_URL = None         # e.g. "https://www.linkedin.com/company/..."
 ADDRESS_LINES = None        # e.g. ["Street 1", "1000 City", "Country"]
 SITE_URL = None             # e.g. "https://www.terraverta.com" (no trailing slash)
-TEAM = [("Noor Claus", None)]  # (name, role); role None = no role shown
+# (name, role, photo); role None = no role shown, photo None = grey silhouette
+TEAM = [("Noor Claus", None, "/assets/team/noor-claus.jpg")]
 
 LANGS = ["en", "nl", "da"]
 ABOUT_SLUG = {"en": "about", "nl": "over-ons", "da": "om-os"}
@@ -323,9 +324,10 @@ def about(lang):
         f'<li><span class="num">{i}</span><h3>{escape(h)}</h3><p>{escape(p)}</p></li>'
         for i, (h, p) in enumerate(t["steps"], 1))
     team = "".join(
-        f'<div class="member"><div class="photo">{PERSON}</div>'
-        f'<h3>{escape(n)}</h3>{"<p>" + escape(r) + "</p>" if r else ""}</div>'
-        for n, r in TEAM)
+        '<div class="member"><div class="photo">'
+        + (f'<img src="{escape(ph)}" alt="{escape(n)}" width="640" height="640" loading="lazy">' if ph else PERSON)
+        + f'</div><h3>{escape(n)}</h3>{"<p>" + escape(r) + "</p>" if r else ""}</div>'
+        for n, r, ph in TEAM)
     team_section = f'''<section class="prose reveal"><div class="wrap">
 <h2>{escape(t["team_h"])}</h2><div class="team">{team}</div>
 </div></section>
