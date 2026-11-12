@@ -7,7 +7,7 @@ automatically on every push to `main`.
 
 All text is in `build.py`, in the `TEXT` block (one section per language). Company details
 (e-mail, LinkedIn, address, team, site address) are at the top of the same file; anything
-left as `None` shows on the site as a yellow placeholder.
+left as `None` is left off the site.
 
 After editing, regenerate the pages and commit:
 

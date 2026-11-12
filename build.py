@@ -12,14 +12,13 @@ ROOT = Path(__file__).parent / "public"
 SITE_NAME = "Terra Verta"
 
 # ---------------------------------------------------------------------------
-# Details to fill in. Anything left as None is shown as a highlighted
-# placeholder on the site.
+# Company details. Anything left as None is simply left off the site.
 # ---------------------------------------------------------------------------
-CONTACT_EMAIL = None        # e.g. "info@terraverta.com"
+CONTACT_EMAIL = "Noor.Claus@UGent.be"
 LINKEDIN_URL = None         # e.g. "https://www.linkedin.com/company/..."
 ADDRESS_LINES = None        # e.g. ["Street 1", "1000 City", "Country"]
 SITE_URL = None             # e.g. "https://www.terraverta.com" (no trailing slash)
-TEAM = []                   # e.g. [("Name", "Role"), ("Name", "Role")]
+TEAM = [("Noor Claus", None)]  # (name, role); role None = no role shown
 
 LANGS = ["en", "nl", "da"]
 ABOUT_SLUG = {"en": "about", "nl": "over-ons", "da": "om-os"}
@@ -237,16 +236,20 @@ def header(t, lang, page, paths):
 
 
 def footer(t):
-    email = (f'<a href="mailto:{escape(CONTACT_EMAIL)}">{escape(CONTACT_EMAIL)}</a>'
-             if CONTACT_EMAIL else todo(t["ph_email"]))
-    linkedin = (f'<a href="{escape(LINKEDIN_URL)}" rel="noopener">LinkedIn</a>'
-                if LINKEDIN_URL else todo(t["ph_linkedin"]))
-    address = ("<br>".join(escape(l) for l in ADDRESS_LINES)
-               if ADDRESS_LINES else todo(t["ph_address"]))
+    contact = []
+    if CONTACT_EMAIL:
+        contact.append(f'<a href="mailto:{escape(CONTACT_EMAIL)}">{escape(CONTACT_EMAIL)}</a>')
+    if LINKEDIN_URL:
+        contact.append(f'<a href="{escape(LINKEDIN_URL)}" rel="noopener">LinkedIn</a>')
+    contact_col = (f'<div><h2>{escape(t["f_contact"])}</h2><p>{"<br>".join(contact)}</p></div>'
+                   if contact else "")
+    address_col = (f'<div><h2>{escape(t["f_address"])}</h2><address>'
+                   + "<br>".join(escape(l) for l in ADDRESS_LINES) + "</address></div>"
+                   if ADDRESS_LINES else "<div></div>")
     return f'''<footer class="site-footer" id="contact"><div class="wrap">
 <div class="cols">
-<div><h2>{escape(t["f_contact"])}</h2><p>{email}<br>{linkedin}</p></div>
-<div><h2>{escape(t["f_address"])}</h2><address>{address}</address></div>
+{contact_col}
+{address_col}
 <div class="big-mark">{MARK}</div>
 </div>
 <p class="legal"><span>© 2026 {SITE_NAME}</span></p>
@@ -319,11 +322,14 @@ def about(lang):
     steps = "".join(
         f'<li><span class="num">{i}</span><h3>{escape(h)}</h3><p>{escape(p)}</p></li>'
         for i, (h, p) in enumerate(t["steps"], 1))
-    people = TEAM or [(None, None)] * 2
     team = "".join(
         f'<div class="member"><div class="photo">{PERSON}</div>'
-        f'<h3>{escape(n) if n else todo(t["ph_name"])}</h3><p>{escape(r) if r else todo(t["ph_role"])}</p></div>'
-        for n, r in people)
+        f'<h3>{escape(n)}</h3>{"<p>" + escape(r) + "</p>" if r else ""}</div>'
+        for n, r in TEAM)
+    team_section = f'''<section class="prose reveal"><div class="wrap">
+<h2>{escape(t["team_h"])}</h2><div class="team">{team}</div>
+</div></section>
+''' if TEAM else ""
     return head(t, lang, t["title_about"], paths) + header(t, lang, "about", paths) + f'''<main id="main">
 <section class="page-head"><div class="wrap">
 <h1>{escape(t["about_h"])}</h1>
@@ -342,10 +348,7 @@ def about(lang):
 <h2>{escape(t["how_h"])}</h2><ol class="steps">{steps}</ol>
 </div></section>
 
-<section class="prose reveal"><div class="wrap">
-<h2>{escape(t["team_h"])}</h2><div class="team">{team}</div>
-</div></section>
-
+{team_section}
 {cta(t)}</main>
 ''' + footer(t)
 
