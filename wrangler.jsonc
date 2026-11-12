@@ -1,0 +1,9 @@
+{
+  // Cloudflare serves the ./public folder as a static site. No build step.
+  "name": "terra-verta",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}

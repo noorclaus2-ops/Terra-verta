@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terra Verta</title>
+<meta name="description" content="Terra Verta combines artificial intelligence with industrial fermentation to produce biofertilizers at scale.">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<script>
+(function () {
+  var supported = ['en', 'nl', 'da'], pick = "en";
+  var prefs = navigator.languages || [navigator.language || "en"];
+  for (var i = 0; i < prefs.length; i++) {
+    var code = String(prefs[i]).toLowerCase().split("-")[0];
+    if (supported.indexOf(code) !== -1) { pick = code; break; }
+  }
+  location.replace("/" + pick + "/");
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=/en/"></noscript>
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<main class="center-page"><div><h1>Terra Verta</h1><ul><li><a class="btn" href="/en/" lang="en">English</a></li><li><a class="btn" href="/nl/" lang="nl">Nederlands</a></li><li><a class="btn" href="/da/" lang="da">Dansk</a></li></ul></div></main>
+</body>
+</html>
