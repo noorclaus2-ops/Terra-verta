@@ -297,7 +297,7 @@ p { text-wrap: pretty; }
 /* About: a low meadow along the bottom of the page head. */
 .page-head { position: relative; overflow: hidden; }
 .page-head canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; pointer-events: none; }
-.page-head .wrap { position: relative; }
+.page-head .wrap { position: relative; align-items: center; padding-top: clamp(1.5rem, 4vw, 3rem); padding-bottom: clamp(7rem, 15vw, 11rem); }
 .page-head h1 { animation: rise 0.9s ease both; }
 .page-head p { animation: rise 0.9s ease 0.2s both; }
 
