@@ -203,22 +203,22 @@ ART_PLANT = '''<svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid slice" a
 <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5aa7e0"/><stop offset="1" stop-color="#d8ecf7"/></linearGradient>
 <linearGradient id="tank" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8fa3ad"/><stop offset=".45" stop-color="#e8eff2"/><stop offset="1" stop-color="#7d919b"/></linearGradient></defs>
 <rect width="800" height="800" fill="url(#sky)"/>
-<g fill="#fff" opacity=".75"><ellipse cx="170" cy="150" rx="120" ry="26"/><ellipse cx="260" cy="130" rx="90" ry="22"/><ellipse cx="610" cy="90" rx="110" ry="20"/></g>
+<g class="a-clouds" fill="#fff" opacity=".75"><ellipse cx="170" cy="150" rx="120" ry="26"/><ellipse cx="260" cy="130" rx="90" ry="22"/><ellipse cx="610" cy="90" rx="110" ry="20"/></g>
 <path d="M0 420C160 340 330 330 520 380s210 10 280-20v440H0z" fill="#4f9a45"/>
 <path d="M0 470c190-70 380-40 560 0s180 10 240-10v340H0z" fill="#2f7a37"/>
 <g stroke="#256a2e" stroke-width="3" opacity=".6"><path d="M0 520l800-60M0 560l800-50M0 600l800-40"/></g>
 <g><rect x="60" y="430" width="120" height="370" rx="14" fill="url(#tank)"/><rect x="200" y="380" width="130" height="420" rx="14" fill="url(#tank)"/><rect x="350" y="450" width="110" height="350" rx="14" fill="url(#tank)"/>
 <path d="M60 470h120M200 420h130M350 490h110" stroke="#6d818b" stroke-width="4"/>
 <rect x="440" y="560" width="360" height="240" fill="#dfe7ea"/><path d="M440 560l180-60 180 60z" fill="#b9c6cc"/></g>
-<g transform="translate(470 250) scale(4.2)" fill="#2fbf62"><path d="M30 60V36h4v24z"/><path d="M31 40C15 40 6 30 6 14c16 0 25 9 25 26z"/><path d="M33 30c0-15 8-24 25-24 0 16-9 24-25 24z"/></g>
+<g transform="translate(470 250) scale(4.2)" fill="#2fbf62"><g class="a-sway"><path d="M30 60V36h4v24z"/><path d="M31 40C15 40 6 30 6 14c16 0 25 9 25 26z"/><path d="M33 30c0-15 8-24 25-24 0 16-9 24-25 24z"/></g></g>
 </svg>'''
 
 ART_FIELD = '''<svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 <defs><linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e7b4"/><stop offset="1" stop-color="#fdf6dd"/></linearGradient></defs>
 <rect width="800" height="600" fill="url(#dawn)"/>
-<circle cx="610" cy="150" r="70" fill="#ffd34d"/>
+<circle class="a-halo" cx="610" cy="150" r="70" fill="#ffd34d" opacity=".35"/><circle cx="610" cy="150" r="70" fill="#ffd34d"/>
 <path d="M0 250c200-50 420-40 800 10v340H0z" fill="#6b4a2b"/>
-<g fill="none" stroke="#2f9a45" stroke-width="16" stroke-linecap="round" stroke-dasharray="2 34">
+<g class="a-rows" fill="none" stroke="#2f9a45" stroke-width="16" stroke-linecap="round" stroke-dasharray="2 34">
 <path d="M400 250L-260 600"/><path d="M400 250L-40 600"/><path d="M400 250L180 600"/><path d="M400 250L400 600"/><path d="M400 250L620 600"/><path d="M400 250L840 600"/><path d="M400 250L1060 600"/></g>
 <g fill="none" stroke="#573a20" stroke-width="3" opacity=".5"><path d="M400 250L-150 600M400 250L70 600M400 250L290 600M400 250L510 600M400 250L730 600M400 250L950 600"/></g>
 </svg>'''
@@ -259,6 +259,7 @@ def head(t, lang, title, paths):
 <link rel="preload" href="/assets/fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 <script defer src="/assets/site.js"></script>
+<script defer src="/assets/scene.js"></script>
 </head>
 <body>
 <a class="skip" href="#main">{escape(t["skip"])}</a>
@@ -400,8 +401,8 @@ def home(lang):
         for i, (h, p) in enumerate(t["steps"], 1))
     return head(t, lang, t["title_home"], paths) + header(t, lang, "home", paths) + f'''<main id="main">
 <section class="hero">
-<div class="hero-art" aria-hidden="true"><i class="o1"></i><i class="o4"></i><i class="o2"></i><i class="o3"></i></div>
-<div><div class="hero-mark">{MARK}</div><h1>{escape(t["hero"])}</h1></div>
+<div class="hero-art" aria-hidden="true"><i class="glow"></i><canvas data-scene="soil"></canvas></div>
+<div class="hero-copy"><div class="hero-mark">{MARK}</div><h1>{escape(t["hero"])}</h1></div>
 </section>
 
 <section class="split">
@@ -455,7 +456,7 @@ def about(lang):
 </div></section>
 ''' if TEAM else ""
     return head(t, lang, t["title_about"], paths) + header(t, lang, "about", paths) + f'''<main id="main">
-<section class="page-head"><div class="wrap">
+<section class="page-head"><canvas data-scene="meadow" aria-hidden="true"></canvas><div class="wrap">
 <h1>{escape(t["about_h"])}</h1>
 <p>{escape(t["about_tag"])}</p>
 </div></section>
