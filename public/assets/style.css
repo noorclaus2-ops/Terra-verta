@@ -346,7 +346,19 @@ p { text-wrap: pretty; }
 .member .photo:hover img { transform: scale(1.04); }
 .site-footer .big-mark svg { transform-origin: 50% 100%; animation: sway 7s ease-in-out infinite alternate; }
 
+/* Bioreactor illustration: bubbles, status lights, nutrient flow, microbes. */
+.a-bubble { animation: bubble 2.7s ease-in infinite; }
+@keyframes bubble { from { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } to { transform: translateY(-58px); opacity: 0; } }
+.a-led { animation: led 2.4s ease-in-out infinite; }
+@keyframes led { 50% { opacity: 0.25; } }
+.a-flow { animation: flow 1.4s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -14; } }
+.a-microbe { animation: led 3s ease-in-out infinite; }
+.a-halo-soft { transform-box: fill-box; transform-origin: center; animation: glow-soft 9s ease-in-out infinite alternate; }
+@keyframes glow-soft { to { transform: scale(1.15); opacity: 0.7; } }
+
 @media (prefers-reduced-motion: reduce) {
+  .a-bubble, .a-led, .a-flow, .a-microbe, .a-halo-soft { animation: none; }
   .hero-mark, .hero-mark svg, .hero h1, .page-head h1, .page-head p, .a-clouds, .a-sway, .a-halo, .a-rows,
   .site-footer .big-mark svg, .pillars.is-auto .pillar-tabs button::after { animation: none; }
   .js .reveal > *, .js .steps li, .js .dash-tile, .js .dash-card { opacity: 1; transform: none; transition: none; }
